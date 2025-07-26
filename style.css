@@ -84,6 +84,7 @@ body {
     border: none;
     cursor: pointer;
     transition: 0.5s;
+    color: #333;
 }
 
 .content {
