@@ -133,6 +133,7 @@
 
 
     btn.addEventListener('click', () => {
+        playAudio()
         if (!canMove) return; // Không di chuyển nữa nếu đã hết mảng
 
         currentWidth += 20;
