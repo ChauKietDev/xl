@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xin lỗi bé iu</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="box__image">
+            <img id="image" src="./hello-kitty-cry.gif" alt="">
+        </div>
+
+        <div style="display: flex; justify-content: center;">
+            <svg viewBox="0 0 100 100" class="image__heart">
+                <defs>
+                    <!-- ClipPath để cắt ảnh theo hình trái tim -->
+                    <clipPath id="heartClip">
+                        <path d="
+        M50 30
+        C 35 10, 0 25, 50 80
+        C 100 25, 65 10, 50 30
+      " />
+                    </clipPath>
+                </defs>
+
+                <!-- Ảnh được cắt theo trái tim -->
+                <image href="./522012455_122137746788655153_8363660709277810833_n.jpg" x="0" y="0" width="100"
+                    height="100" clip-path="url(#heartClip)" preserveAspectRatio="xMidYMid slice" />
+
+                <!-- Path riêng để làm đường chạy cho chấm sáng -->
+                <path id="heartPath" class="heart-stroke" d="
+    M50 30
+    C 35 10, 0 25, 50 80
+    C 100 25, 65 10, 50 30
+  " />
+
+
+                <!-- Chấm sáng chạy theo đường viền -->
+                <circle class="glow-dot">
+                    <animateMotion dur="4s" repeatCount="indefinite" rotate="auto">
+                        <mpath href="#heartPath" />
+                    </animateMotion>
+                </circle>
+            </svg>
+        </div>
+
+        <h1 class="content">Bé iuu ơi choo anhh xinn lỗi nhóooo 😭 <br>
+            Bé hong chọn hoặc thoát là tha lỗi cho anh đó</h1>
+
+        <img class="img__walk" src="./hello-kitty-walk.gif" alt="">
+    </div>
+    <div class="action">
+        <button id="accept">Em chấp nhận</button>
+        <button onclick="never()" id="never">Không bao giờ</button>
+    </div>
+
+
+
+
+
+    <audio id="bg-music" src="./videoplayback.mp3"></audio>
+</body>
+<script>
+
+    const arrNever = [
+        'Anh biết lỗi rồi ạaaa',
+        'Mong bé tha lỗi cho anhhh :((',
+        'Anh sai rồi, anh đáng trách',
+        'Bé ơi! Đừng giận anh nữa nhooo',
+        'Anh iuuu bé nhiều nhắmmmm'
+    ]
+
+    function playAudio() {
+        const audio = document.getElementById('bg-music');
+        audio.play();
+    }
+
+    //hieu ung roi trinh duyet
+    const emojis = ["🎀", "💖", "💘", "💗", "💕", "🥰", "😽", "😻", "🌸"];
+
+    function createFallingEmoji() {
+        const emoji = document.createElement('div');
+        emoji.classList.add('emoji');
+        emoji.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+
+        // Random vị trí trái, kích thước, thời gian rơi
+        emoji.style.left = Math.random() * 100 + 'vw';
+        emoji.style.fontSize = (Math.random() * 20 + 20) + 'px';
+        emoji.style.animationDuration = (Math.random() * 2 + 3) + 's';
+
+        document.body.appendChild(emoji); a
+
+        // Xóa emoji sau khi hoàn tất animation
+        setTimeout(() => {
+            emoji.remove();
+        }, 5000);
+    }
+
+    // Tạo emoji rơi liên tục
+    setInterval(createFallingEmoji, 400);
+
+    //handel accept
+    const acceptElement = document.querySelector('#accept')
+    const neverELement = document.querySelector('#never')
+    const imageHeartElement = document.querySelector('.image__heart')
+
+    acceptElement.addEventListener('click', () => {
+        //phat nhac
+        playAudio()
+        const contentElement = document.querySelector('.content')
+        const imageElement = document.querySelector('#image')
+        if (contentElement) {
+            contentElement.textContent = ""
+            contentElement.textContent = "Anh iu bé ,Anh hứa hongg làm bé buồn nữa đouuu :3"
+            imageElement.src = ""
+            imageElement.src = "./cat-yes.jpg"
+            acceptElement.style.display = 'none'
+            neverELement.style.display = 'none'
+            imageHeartElement.style.display = 'block'
+        }
+    })
+
+    let index = 0;
+    const btn = document.getElementById('never');
+    let canMove = true;
+    let currentWidth = acceptElement.offsetWidth;
+    let currentHeight = acceptElement.offsetHeight;
+    let currentFontSize = parseFloat(window.getComputedStyle(acceptElement).fontSize);
+
+
+    btn.addEventListener('click', () => {
+        if (!canMove) return; // Không di chuyển nữa nếu đã hết mảng
+
+        currentWidth += 20;
+        currentHeight += 20;
+        currentFontSize += 2;
+
+        acceptElement.style.width = currentWidth + 'px';
+        acceptElement.style.height = currentHeight + 'px';
+        acceptElement.style.fontSize = currentFontSize + 'px';
+
+        // Đổi text
+        btn.textContent = arrNever[index];
+        index++;
+
+        // Khi đến phần tử cuối cùng thì không né nữa
+        if (index >= arrNever.length) {
+            canMove = false;
+            return;
+        }
+
+        // Né chuột
+        const maxX = window.innerWidth - btn.offsetWidth;
+        const maxY = window.innerHeight - btn.offsetHeight;
+        const randomX = Math.floor(Math.random() * maxX);
+        const randomY = Math.floor(Math.random() * maxY);
+
+        btn.style.left = `${randomX}px`;
+        btn.style.top = `${randomY}px`;
+    });
+
+    // Nếu bạn muốn xử lý gì đó khi nhấn được nút
+    // btn.addEventListener('click', () => {
+    //     if (!canMove) {
+    //         alert("Bé đã tha thứ cho anh rồi 😍");
+    //     }
+    // });
+</script>
+
+</html>
