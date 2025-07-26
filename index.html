@@ -28,7 +28,7 @@
                 </defs>
 
                 <!-- Ảnh được cắt theo trái tim -->
-                <image href="./522012455_122137746788655153_8363660709277810833_n.jpg" x="0" y="0" width="100"
+                <image href="./bankinhanh.jfif" x="0" y="0" width="100"
                     height="100" clip-path="url(#heartClip)" preserveAspectRatio="xMidYMid slice" />
 
                 <!-- Path riêng để làm đường chạy cho chấm sáng -->
@@ -74,6 +74,14 @@
         'Anh iuuu bé nhiều nhắmmmm'
     ]
 
+    const arrImage = [
+        './cat-1.jpg',
+        './cat-2.jpg',
+        './cat-3.jpg',
+        './cat-4.jpg',
+        './cat-5.jpg'
+    ]
+
     function playAudio() {
         const audio = document.getElementById('bg-music');
         audio.play();
@@ -107,6 +115,7 @@
     const acceptElement = document.querySelector('#accept')
     const neverELement = document.querySelector('#never')
     const imageHeartElement = document.querySelector('.image__heart')
+    const imageElement = document.querySelector('.image')
 
     acceptElement.addEventListener('click', () => {
         //phat nhac
@@ -131,7 +140,6 @@
     let currentHeight = acceptElement.offsetHeight;
     let currentFontSize = parseFloat(window.getComputedStyle(acceptElement).fontSize);
 
-
     btn.addEventListener('click', () => {
         playAudio()
         if (!canMove) return; // Không di chuyển nữa nếu đã hết mảng
@@ -146,6 +154,8 @@
 
         // Đổi text
         btn.textContent = arrNever[index];
+        imageElement.src = ""
+        imageElement.src = arrImage[index]
         index++;
 
         // Khi đến phần tử cuối cùng thì không né nữa
